@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">MD13</string>
+    <string name="behind">Недолёт!</string>
+    <string name="ahead">Перелёт!</string>
+    <string name="hit">Поздравляем! Вы победили!!!\n\n\n\n Чтобы играть заново выберите сложность</string>
+    <string name="input_button">Ввести значение</string>
+    <string name="try_again">Попробовать ещё раз</string>
+    <string name="try_to_guess">Попробуйте угадать число! \n Введите число от 0 до 100</string>
+    <string name="empty_error">Неверный ввод! Поле для числа пустое</string>
+    <string name="error_diff">Неверный ввод! \n\n Выберите уровень сложности в меню</string>
+    <string name="num_error">Число не находится в диапазоне от 0 до 100 - Повторите ввод</string>
+    <string name="menu_new_game">Начать новую игру</string>
+    <string name="menu_exit">Выйти</string>
+    <string name="menu_easy">Easy</string>
+    <string name="menu_medium">Medium</string>
+    <string name="menu_hard">Hard</string>
+    <string name="menu_choose">Выбрать уровень сложности</string>
+    <string name="easy_mode">Попробуйте угадать число! \n Введите число от 0 до 10</string>
+    <string name="choose_diff">Угадай число! \n\n Для начала игры выберите уровень сложности в меню</string>
+    <string name="new_game">Угадай число! \n\n Выберите уровень сложности в меню</string>
+</resources>
