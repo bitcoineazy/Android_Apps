@@ -1,2 +1,2 @@
 # Android_Apps
-Java-based Android apps repository
+Java-based Android apps repository for finished projects
