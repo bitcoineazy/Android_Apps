@@ -21,11 +21,14 @@ public class MainActivity extends AppCompatActivity {
     public void ShowResults (View v) {
         EditText question_3 = findViewById(R.id.heart_rate_lie);
         EditText question_6 = findViewById(R.id.heart_rate_stand);
-        String pulse_lie = question_3.getText().toString();
-        String pulse_stand = question_6.getText().toString();
+        int pulse_lie = Integer.parseInt(question_3.getText().toString());
+        int pulse_stand = Integer.parseInt(question_6.getText().toString());
         Intent intent = new Intent(this, Results.class);
-        intent.putExtra("pulse_lie", pulse_lie);
-        intent.putExtra("pulse_stand", pulse_stand);
+        int final_difference = pulse_lie - pulse_stand;
+
+
+
+        intent.putExtra("final_difference", final_difference);
         startActivity(intent);
 
     }

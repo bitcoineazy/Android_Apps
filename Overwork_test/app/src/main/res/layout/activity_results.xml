@@ -15,34 +15,41 @@
         android:textColor="@color/red" />
 
     <TextView
+        style="@style/HeaderStyle"
         android:id="@+id/result_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/metrics_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TableRow
-        android:orientation="horizontal">
+    <TableRow>
         <ImageView
             android:id="@+id/metrics_iv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/percent_100"
-            android:layout_weight="0.1"/>
-        <ImageView
-            android:id="@+id/metrics_smile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/percent_80"
-            android:layout_weight="0.5"/>
-        <TextView
-            android:id="@+id/smile_description"
+            android:layout_weight="0.4"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="123123"
-            android:layout_weight="0.7"/>
+            android:layout_height="match_parent"
+            android:src="@drawable/percent_100"/>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4">
+            <ImageView
+                android:id="@+id/metrics_smile_iv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/percent_80"
+                android:layout_weight="2"/>
+            <TextView
+                style="@style/HeaderStyle"
+                android:textStyle="italic"
+                android:textAlignment="center"
+                android:id="@+id/metrics_description"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="123123"
+                android:layout_weight="0.7"/>
+
+        </LinearLayout>
+
 
     </TableRow>
 
