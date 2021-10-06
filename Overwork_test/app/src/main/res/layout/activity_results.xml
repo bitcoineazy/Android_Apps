@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Results">
+
+    <TextView
+        style="@style/HeaderStyle"
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Результаты теста"
+        android:textColor="@color/red" />
+
+    <TextView
+        android:id="@+id/result_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/metrics_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TableRow
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/metrics_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/percent_100"
+            android:layout_weight="0.1"/>
+        <ImageView
+            android:id="@+id/metrics_smile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/percent_80"
+            android:layout_weight="0.5"/>
+        <TextView
+            android:id="@+id/smile_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="123123"
+            android:layout_weight="0.7"/>
+
+    </TableRow>
+
+
+</TableLayout>
