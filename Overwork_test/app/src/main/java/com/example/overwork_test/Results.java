@@ -33,30 +33,39 @@ public class Results extends AppCompatActivity {
             resultAwesome();
         } else if (final_difference > 12 && final_difference < 19) {
             resultGood();
-        } else if (final_difference > 18 && final_difference < 26) {
+        } else if (final_difference > 19 && final_difference < 26) {
             resultBad();
         } else if (final_difference > 25) {
             resultWorst();
         }
-
     }
 
     public void resultAwesome() {
         ResultDescription.setText("Не забывайте о регулярном профессиональном медицинском осмотре!");
         MetricsDescription.setText("Введенные значения соответствуют отсутствию переутомления.");
         Metrics_1.setImageResource(R.drawable.percent_100);
-        Metrics_2.setImageResource(R.drawable.percent_100);
+        Metrics_2.setImageResource(R.drawable.awesome_smile);
     }
 
     public void resultGood() {
-
+        ResultDescription.setText("Вам необходимо отдохнуть и проконсультироваться со специалистом, если состояние не улучшится!");
+        MetricsDescription.setText("Введенные значения соответствуют умеренному уровню переутомления");
+        Metrics_1.setImageResource(R.drawable.percent_60);
+        Metrics_1.setImageResource(R.drawable.percent_60);
     }
 
     public void resultBad() {
-
+        ResultDescription.setText("Вам необходимо срочно взять отдых и обратиться в мед учреждение для осмотра!");
+        MetricsDescription.setText("Введенные значения соответствуют сильному уровню переутомления");
+        Metrics_1.setImageResource(R.drawable.percent_20);
+        Metrics_1.setImageResource(R.drawable.percent_20);
     }
 
     public void resultWorst() {
-
+        ResultDescription.setText("Вам необходима срочная госпитализация и больничный режим!");
+        MetricsDescription.setText("Введенные значения соответствуют критическому уровню переутомления!");
+        Metrics_1.setImageResource(R.drawable.percent_0);
+        Metrics_1.setImageResource(R.drawable.percent_0);
     }
+
 }

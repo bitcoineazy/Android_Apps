@@ -5,8 +5,13 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
+
+import java.lang.reflect.Array;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,6 +22,18 @@ public class MainActivity extends AppCompatActivity {
         //Отключаем темную тему приложения
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
+        Spinner birth_year_sp = findViewById(R.id.birth_year_spinner);
+
+
+        String[] birth_years = new String[100];
+        int start_year = 2021;
+        for (int i=0; i < 100; i++) {
+            birth_years[i] = String.valueOf(start_year - i);
+            Log.d("Spinner","Birth year:" + birth_years[i]);
+        }
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, birth_years);
+        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        birth_year_sp.setAdapter(spinnerArrayAdapter);
     }
     public void ShowResults (View v) {
         EditText question_3 = findViewById(R.id.heart_rate_lie);
