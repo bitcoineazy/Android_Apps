@@ -1,5 +1,6 @@
 package com.example.overwork_test;
 
+import androidx.annotation.Dimension;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -11,9 +12,14 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import java.lang.reflect.Array;
+import java.text.DateFormatSymbols;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
+    Spinner birth_year_sp;
+    Spinner birth_months_sp;
+    Spinner birth_date_sp;
+    Spinner gender_sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,31 +28,72 @@ public class MainActivity extends AppCompatActivity {
         //Отключаем темную тему приложения
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
-        Spinner birth_year_sp = findViewById(R.id.birth_year_spinner);
+        birth_year_sp = findViewById(R.id.birth_year_spinner);
+        birth_months_sp = findViewById(R.id.birth_month_spinner);
+        birth_date_sp = findViewById(R.id.birth_date_spinner);
+        gender_sp = findViewById(R.id.gender_spinner);
 
 
+        // Выпадающее меню
         String[] birth_years = new String[100];
         int start_year = 2021;
         for (int i=0; i < 100; i++) {
             birth_years[i] = String.valueOf(start_year - i);
-            Log.d("Spinner","Birth year:" + birth_years[i]);
         }
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, birth_years);
-        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        birth_year_sp.setAdapter(spinnerArrayAdapter);
+        String[] birth_months = new String[12];
+        for (int i=0; i < 12; i++) {
+            birth_months[i] = String.valueOf(getMonthForInt(i));
+        }
+        String[] birth_dates = new String[31];
+        for (int i=0; i < 31; i++) {
+            birth_dates[i] = String.valueOf(i+1);
+        }
+        String[] genders = {"М", "Ж"};
+
+
+
+        ArrayAdapter<String> spinnerArrayYears = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, birth_years);
+        ArrayAdapter<String> spinnerArrayMonths = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, birth_months);
+        ArrayAdapter<String> spinnerArrayDates = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, birth_dates);
+        ArrayAdapter<String> spinnerArrayGenders = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, genders);
+
+        spinnerArrayYears.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerArrayMonths.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerArrayDates.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerArrayGenders.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        birth_year_sp.setAdapter(spinnerArrayYears);
+        birth_months_sp.setAdapter(spinnerArrayMonths);
+        birth_date_sp.setAdapter(spinnerArrayDates);
+        gender_sp.setAdapter(spinnerArrayGenders);
+
     }
     public void ShowResults (View v) {
         EditText question_3 = findViewById(R.id.heart_rate_lie);
         EditText question_6 = findViewById(R.id.heart_rate_stand);
-        int pulse_lie = Integer.parseInt(question_3.getText().toString());
-        int pulse_stand = Integer.parseInt(question_6.getText().toString());
-        Intent intent = new Intent(this, Results.class);
-        int final_difference = pulse_lie - pulse_stand;
+        if (question_3.getText().length() > 0 && question_6.getText().length() > 0) {
+            int pulse_lie = Integer.parseInt(question_3.getText().toString());
+            int pulse_stand = Integer.parseInt(question_6.getText().toString());
+            Intent intent = new Intent(this, Results.class);
+            int final_difference = Math.abs(pulse_stand - pulse_lie);
+            String[] person_credentials = {birth_date_sp.getSelectedItem().toString(),
+                    birth_months_sp.getSelectedItem().toString(),
+                    birth_year_sp.getSelectedItem().toString(),
+                    gender_sp.getSelectedItem().toString()};
+            intent.putExtra("final_difference", final_difference);
+            intent.putExtra("credentials", person_credentials);
+            startActivity(intent);
+        }
 
 
-
-        intent.putExtra("final_difference", final_difference);
-        startActivity(intent);
-
+    }
+    public String getMonthForInt(int num) {
+        String month = "";
+        DateFormatSymbols dfs = new DateFormatSymbols(new Locale("ru"));
+        String[] months = dfs.getMonths();
+        if (num >= 0 && num <= 11 ) {
+            month = months[num];
+        }
+        return month;
     }
 }
