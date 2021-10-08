@@ -1,12 +1,12 @@
 package com.example.overwork_test;
 
-import androidx.annotation.Dimension;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         birth_months_sp = findViewById(R.id.birth_month_spinner);
         birth_date_sp = findViewById(R.id.birth_date_spinner);
         gender_sp = findViewById(R.id.gender_spinner);
+
 
 
         // Выпадающее меню
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         gender_sp.setAdapter(spinnerArrayGenders);
 
     }
+
     public void ShowResults (View v) {
         EditText question_3 = findViewById(R.id.heart_rate_lie);
         EditText question_6 = findViewById(R.id.heart_rate_stand);
@@ -80,13 +82,14 @@ public class MainActivity extends AppCompatActivity {
                     birth_months_sp.getSelectedItem().toString(),
                     birth_year_sp.getSelectedItem().toString(),
                     gender_sp.getSelectedItem().toString()};
+            intent.putExtra("pulse_lie", pulse_lie);
+            intent.putExtra("pulse_stand", pulse_stand);
             intent.putExtra("final_difference", final_difference);
             intent.putExtra("credentials", person_credentials);
             startActivity(intent);
         }
-
-
     }
+
     public String getMonthForInt(int num) {
         String month = "";
         DateFormatSymbols dfs = new DateFormatSymbols(new Locale("ru"));
@@ -96,4 +99,27 @@ public class MainActivity extends AppCompatActivity {
         }
         return month;
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.setGroupVisible(R.id.new_game_group, false);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_exit) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }
