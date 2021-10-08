@@ -192,20 +192,6 @@
                 android:layout_marginVertical="20dp"
                 android:layout_marginStart="20dp"
                 android:src="@drawable/clock" />
-
         </TableRow>
-
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
-
-
-
-        </LinearLayout>
-
     </TableLayout>
 </ScrollView>
