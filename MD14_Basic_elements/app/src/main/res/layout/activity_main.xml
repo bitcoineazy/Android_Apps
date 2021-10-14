@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginTop="20dp"
+    android:layout_marginBottom="20dp"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/main_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="20dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/update_tv_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="20dp"
+            android:text="Update tv" />
+        <EditText
+            android:id="@+id/main_edittext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="20dp"
+            android:layout_marginHorizontal="20dp"
+            android:hint="@string/hint" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/ok_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="20dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_weight="1"
+            android:text="OK" />
+
+        <Button
+            android:id="@+id/cnc_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="20dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_weight="1"
+            android:text="cancel" />
+    </LinearLayout>
+    <ListView
+        android:id="@+id/main_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginVertical="20dp" />
+
+</LinearLayout>
