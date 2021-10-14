@@ -8,10 +8,7 @@ import android.view.View;
 import android.widget.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity{
     TextView mainTV;
@@ -19,7 +16,7 @@ public class MainActivity extends AppCompatActivity{
     ListView mainListView;
     ArrayAdapter mArrayAdapter;
     ArrayList mNameList = new ArrayList();
-    Button mainButton, ok_btn, cnc_btn;
+    Button mainButton, add_btn, reset_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,13 +26,13 @@ public class MainActivity extends AppCompatActivity{
         mainTV = findViewById(R.id.main_tv);
         mainEditText = findViewById(R.id.main_edittext);
         mainListView = findViewById(R.id.main_listview);
-        ok_btn = findViewById(R.id.ok_btn);
-        cnc_btn = findViewById(R.id.cnc_btn);
+        add_btn = findViewById(R.id.add_btn);
+        reset_btn = findViewById(R.id.reset_btn);
 
         mainListView.setOnItemClickListener(arrayListener);
         mainButton.setOnClickListener(oclBtn);
-        ok_btn.setOnClickListener(oclBtn);
-        cnc_btn.setOnClickListener(oclBtn);
+        add_btn.setOnClickListener(oclBtn);
+        reset_btn.setOnClickListener(oclBtn);
 
         mArrayAdapter = new ArrayAdapter(this,
                 android.R.layout.simple_list_item_1,
@@ -59,15 +56,26 @@ public class MainActivity extends AppCompatActivity{
     View.OnClickListener oclBtn = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
             switch (v.getId()) {
                 case (R.id.update_tv_btn):
                     String greeting = mainEditText.getText().toString() + " is learning Android development!";
                     mainTV.setText(greeting);
-                    String text_value = mainEditText.getText().toString();
-
                     Toast.makeText(getApplicationContext(), "Нажата кнопка Update TV",
                             Toast.LENGTH_LONG).show();
+                    break;
+                case (R.id.reset_btn):
+                    // кнопка Cancel
+                    mainTV.setText("Список очищен");
+                    Toast.makeText(getApplicationContext(), "Нажата кнопка RESET",
+                            Toast.LENGTH_LONG).show();
+                    mNameList.clear();
+                    mArrayAdapter.notifyDataSetChanged();
+                    break;
+                case (R.id.add_btn):
+                    // кнопка ОК
+                    Toast.makeText(getApplicationContext(), "Нажата кнопка ADD",
+                            Toast.LENGTH_LONG).show();
+                    String text_value = mainEditText.getText().toString();
                     // Условие добавления нового эл-та в список
                     boolean is_possible = true;
                     if (mNameList.size() > 0) {
@@ -81,28 +89,23 @@ public class MainActivity extends AppCompatActivity{
                         }
                         // Если не встретили одинаковый элемент добавляем новый и сортируем список
                         if (is_possible) {
+                            String value = "Значение: " +
+                                    text_value + " добавлено в список.";
+                            mainTV.setText(value);
                             mNameList.add(text_value);
                             // Сортируем все значения в списке по алфавиту
                             mNameList.sort(Comparator.naturalOrder());
                             mArrayAdapter.notifyDataSetChanged();
+                        } else {
+                            String value = "Значение: " +
+                                    text_value + " уже существует в списке!";
+                            mainTV.setText(value);
                         }
-                    // Добавляем первый элемент в список
+                        // Добавляем первый элемент в список
                     } else {
                         mNameList.add(text_value);
                         mArrayAdapter.notifyDataSetChanged();
                     }
-                    break;
-                case (R.id.cnc_btn):
-                    // кнопка Cancel
-                    mainTV.setText("Нажата кнопка Cancel");
-                    Toast.makeText(getApplicationContext(), "Нажата кнопка Cancel",
-                            Toast.LENGTH_LONG).show();
-                    break;
-                case (R.id.ok_btn):
-                    // кнопка ОК
-                    mainTV.setText("Нажата кнопка ОК");
-                    Toast.makeText(getApplicationContext(), "Нажата кнопка ОК",
-                            Toast.LENGTH_LONG).show();
                     break;
             }
         }
