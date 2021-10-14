@@ -1,8 +1,0 @@
-<resources>
-    <string name="app_name">MD14_Basic_elements</string>
-    <string name="hint">A name</string>
-    <string name="basic_elements">Basic Elements</string>
-    <string name="update_tv">Update tv</string>
-    <string name="add_btn">ADD IN ARRAY</string>
-    <string name="clear_btn">RESET</string>
-</resources>
