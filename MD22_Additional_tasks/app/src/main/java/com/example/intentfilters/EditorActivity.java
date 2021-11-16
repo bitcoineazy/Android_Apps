@@ -7,6 +7,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -74,13 +75,13 @@ public class EditorActivity extends AppCompatActivity {
                 Log.d("Alignment", "alignment is: " + alignment);
                 switch (alignment) {
                     case "По правому краю":
-                        tvEditor.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+                        tvEditor.setGravity(Gravity.START);
                         break;
                     case "По центру":
-                        tvEditor.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                        tvEditor.setGravity(Gravity.CENTER_HORIZONTAL);
                         break;
                     case "По левому краю":
-                        tvEditor.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
+                        tvEditor.setGravity(Gravity.END);
                         break;
                 }
                 break;
