@@ -10,21 +10,26 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IntentFilters">
         <activity
+            android:name=".NameActivity"
+            android:exported="true" />
+        <activity
             android:name=".InfoActivity"
-            android:label="Info"
-            android:exported="true">
+            android:exported="true"
+            android:label="Info">
             <intent-filter>
                 <action android:name="com.example.intent.action.showdate" />
                 <action android:name="com.example.intent.action.showtime" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name=".DateActivity"
-            android:label="Date basic"
-            android:exported="true">
+            android:exported="true"
+            android:label="Date basic">
             <intent-filter>
                 <action android:name="com.example.intent.action.showdate" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -42,6 +47,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
