@@ -15,6 +15,7 @@ public class InfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
+        TextView tvView = findViewById(R.id.tvView);
         // получаем Intent, который вызывал это Activity
         Intent intent = getIntent();
         // читаем из него action
@@ -40,5 +41,7 @@ public class InfoActivity extends AppCompatActivity {
         TextView tvDate = (TextView) findViewById(R.id.tvInfo);
         tvDate.setText(textInfo + datetime);
 
+        String lName = intent.getStringExtra("lname");
+        tvView.setText("Your name is: " + lName);
     }
 }
