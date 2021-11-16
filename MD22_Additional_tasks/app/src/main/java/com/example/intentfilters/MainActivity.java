@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(textEditor);
                 break;
             case (R.id.btnCamera):
+                Intent cameraActivity = new Intent(this, CameraActivity.class);
+                startActivity(cameraActivity);
                 break;
         }
     }

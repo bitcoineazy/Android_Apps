@@ -10,13 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IntentFilters">
         <activity
+            android:name=".CameraActivity"
+            android:exported="true" />
+        <activity
             android:name=".AlignmentEditor"
             android:exported="true" />
         <activity
             android:name=".ColorEditor"
-            android:exported="true" />
-        <activity
-            android:name=".ConfigEditorActivity"
             android:exported="true" />
         <activity
             android:name=".EditorActivity"

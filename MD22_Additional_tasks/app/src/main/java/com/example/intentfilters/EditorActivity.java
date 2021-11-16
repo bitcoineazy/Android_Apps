@@ -16,6 +16,8 @@ public class EditorActivity extends AppCompatActivity {
     Button btnColorEditor;
     Button btnAlignmentEditor;
     TextView tvEditor;
+    final int COLOR_EDIT = 1;
+    final int ALIGNMENT_EDIT = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +33,11 @@ public class EditorActivity extends AppCompatActivity {
         switch (v.getId()) {
             case (R.id.btnColorEditor):
                 Intent colorEditor = new Intent(this, ColorEditor.class);
-                startActivityForResult(colorEditor, 1);
+                startActivityForResult(colorEditor, COLOR_EDIT);
                 break;
             case (R.id.btnAlignmentEditor):
                 Intent alignmentEditor = new Intent(this, AlignmentEditor.class);
-                startActivityForResult(alignmentEditor, 2);
+                startActivityForResult(alignmentEditor, ALIGNMENT_EDIT);
                 break;
         }
     }
@@ -46,7 +48,7 @@ public class EditorActivity extends AppCompatActivity {
         if (data == null) {return;}
         Log.d("Request code", "Request code is: " + requestCode);
         switch (requestCode) {
-            case 1:
+            case COLOR_EDIT:
                 String color = data.getStringExtra("color");
                 Log.d("Color", "color is: " + color);
                 switch (color) {
@@ -70,7 +72,7 @@ public class EditorActivity extends AppCompatActivity {
                         break;
                 }
                 break;
-            case 2:
+            case ALIGNMENT_EDIT:
                 String alignment = data.getStringExtra("alignment");
                 Log.d("Alignment", "alignment is: " + alignment);
                 switch (alignment) {
