@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/tvCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
+        android:text="КАТЕГОРИЯ"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:layout_gravity="center_horizontal"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginHorizontal="20dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:text="Введите дело: "
+            android:layout_weight="4"/>
+        <EditText
+            android:id="@+id/etCase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:autofillHints="Дело"
+            android:inputType="text" />
+        <Button
+            android:id="@+id/btnDateTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@android:style/Theme.Material"
+            android:onClick="onClick"
+            android:layout_weight="4"
+            android:text="ДАТА И ВРЕМЯ"/>
+    </LinearLayout>
+    <Button
+        android:id="@+id/btnAddRecord"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="20dp"
+        android:onClick="onClick"
+        android:text="Добавить"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+    <ListView
+        android:id="@+id/lvFirst"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

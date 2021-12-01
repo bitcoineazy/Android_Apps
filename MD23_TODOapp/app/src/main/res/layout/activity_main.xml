@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="СПИСОК ДЕЛ"
+        android:layout_marginTop="40dp"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:layout_gravity="center_horizontal"/>
+    <Button
+        android:id="@+id/btnFirst"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="20dp"
+        android:onClick="onClick"
+        android:textSize="18sp"
+        style="@android:style/Theme.Material"
+        android:text="Категория №1"/>
+    <Button
+        android:id="@+id/btnSecond"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="20dp"
+        android:onClick="onClick"
+        android:textSize="18sp"
+        style="@android:style/Theme.Material"
+        android:text="Категория №2"/>
+    <Button
+        android:id="@+id/btnThird"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginHorizontal="40dp"
+        android:layout_margin="20dp"
+        android:textSize="18sp"
+        android:onClick="onClick"
+        style="@android:style/Theme.Material"
+        android:text="Категория №3"/>
+    <Button
+        android:id="@+id/btnFourth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginHorizontal="40dp"
+        android:layout_margin="20dp"
+        android:onClick="onClick"
+        android:textSize="18sp"
+        style="@android:style/Theme.Material"
+        android:text="Категория №4"/>
+    <Button
+        android:id="@+id/btnFifth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginHorizontal="40dp"
+        android:layout_margin="20dp"
+        android:onClick="onClick"
+        android:textSize="18sp"
+        style="@android:style/Theme.Material"
+        android:text="Категория №5"/>
+</LinearLayout>
