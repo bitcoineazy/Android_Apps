@@ -49,16 +49,17 @@ public class Category extends AppCompatActivity implements DatePickerDialog.OnDa
                 datePickerDialog.show();
                 break;
             case (R.id.btnAddRecord):
-                lvList.add(myHour + ":" + myMinute + "  " + myDay + "-" + myMonth + "-" + myYear + "   " + etCase.getText().toString());
+                lvList.add(myHour + ":" + myMinute + "  " + myDay + "-" + (myMonth+1)  + "-" + myYear + "   " + etCase.getText().toString());
                 ArrayAdapter<String> listviewAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, lvList);
                 lvRecords.setAdapter(listviewAdapter);
+                break;
         }
     }
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         myYear = year;
-        myDay = day;
+        myDay = dayOfMonth;
         myMonth = month;
         Calendar c = Calendar.getInstance();
         hour = c.get(Calendar.HOUR);
