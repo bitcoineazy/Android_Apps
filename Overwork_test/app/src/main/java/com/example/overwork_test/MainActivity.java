@@ -73,21 +73,19 @@ public class MainActivity extends AppCompatActivity {
     public void ShowResults (View v) {
         EditText question_3 = findViewById(R.id.heart_rate_lie);
         EditText question_6 = findViewById(R.id.heart_rate_stand);
+        Intent intent = new Intent(this, Results.class);
+        String[] person_credentials = {birth_date_sp.getSelectedItem().toString(),
+                birth_months_sp.getSelectedItem().toString(),
+                birth_year_sp.getSelectedItem().toString(),
+                gender_sp.getSelectedItem().toString()};
         if (question_3.getText().length() > 0 && question_6.getText().length() > 0) {
-            int pulse_lie = Integer.parseInt(question_3.getText().toString());
-            int pulse_stand = Integer.parseInt(question_6.getText().toString());
-            Intent intent = new Intent(this, Results.class);
-            int final_difference = Math.abs(pulse_stand - pulse_lie);
-            String[] person_credentials = {birth_date_sp.getSelectedItem().toString(),
-                    birth_months_sp.getSelectedItem().toString(),
-                    birth_year_sp.getSelectedItem().toString(),
-                    gender_sp.getSelectedItem().toString()};
-            intent.putExtra("pulse_lie", pulse_lie);
-            intent.putExtra("pulse_stand", pulse_stand);
-            intent.putExtra("final_difference", final_difference);
-            intent.putExtra("credentials", person_credentials);
-            startActivity(intent);
+            String pulse_lie = question_3.getText().toString();
+            String pulse_stand = question_6.getText().toString();
+            intent.putExtra("first_value", pulse_lie);
+            intent.putExtra("second_value", pulse_stand);
         }
+        intent.putExtra("credentials", person_credentials);
+        startActivity(intent);
     }
 
     public String getMonthForInt(int num) {
@@ -111,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
         menu.setGroupVisible(R.id.new_game_group, false);
         return super.onPrepareOptionsMenu(menu);
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
