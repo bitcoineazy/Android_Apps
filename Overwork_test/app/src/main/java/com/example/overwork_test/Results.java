@@ -4,15 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import org.jsoup.nodes.Document;
 import java.io.IOException;
 
+import org.jsoup.Jsoup;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -43,45 +40,45 @@ public class Results extends AppCompatActivity {
         String first_value = intent.getStringExtra("first_value");
         String second_value = intent.getStringExtra("second_value");
 
-        // Формирование JSON даты для запроса
-        JSONObject json_data = new JSONObject();
-        try {
-            json_data.put("day", "1");
-            json_data.put("month", "1");
-            json_data.put("year", "1995");
-            json_data.put("sex", "1");
-            json_data.put("first_value", first_value);
-            json_data.put("second_value", second_value);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        // Формирование запроса
+        String data = String.format("day=15&month=12&year=1990&sex=1&m1=%s&m2=%s", first_value, second_value);
 
         try {
-            // Отправка POST запроса на локальный сервер http://localhost:80/ через https туннель ngrok
-            overwork_api("https://02f7-46-138-193-85.ngrok.io/burnout/", json_data.toString());
+            overwork_api(data);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-    public static final MediaType JSON
-            = MediaType.get("application/json; charset=utf-8");
 
-    OkHttpClient client = new OkHttpClient();
-
-    public void overwork_api(String url, String json) throws IOException {
-        RequestBody body = RequestBody.create(json, JSON);
-        Request request = new Request.Builder().url(url).post(body).build();
+    public void overwork_api(String data) throws IOException {
+        MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
+        OkHttpClient client = new OkHttpClient();
+        RequestBody body = RequestBody.create(mediaType, data);
+        Request request = new Request.Builder()
+                .url("http://abashin.ru/cgi-bin/ru/tests/burnout")
+                .method("POST", body)
+                .addHeader("Host", "abashin.ru")
+                .addHeader("Connection", "close")
+                .addHeader("Cache-Control", "max-age=0")
+                .addHeader("DNT", "1")
+                .addHeader("Upgrade-Insecure-Requests", "1")
+                .addHeader("Accept", "text/html,application/xhtml+xml,application/xml;" +
+                        "q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9")
+                .addHeader("Accept-Encoding", "deflate")
+                .addHeader("Accept-Language", "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7")
+                .addHeader("Content-Type", "application/x-www-form-urlencoded")
+                .addHeader("Content-Length", "43")
+                .build();
         // Поток отправки запроса и обработки ответа (обновляет tv при получении ответа 200)
+        // Создаем callback (метод обратного вызова) каждый раз, когда отправляем форму через ВВОД
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
                     String message = response.body().string();
-                    String format_message = message.
-                            replace("["+"\"", "").
-                            replace("\""+"]", "");
-                    Log.d("response", message);
+                    // Парсинг html body из ответа
+                    Document html_response = Jsoup.parse(message);
+                    String format_message = html_response.text();
                     // Обновление интерфейса при получении ответа
                     runOnUiThread(new Runnable() {
                         @Override
@@ -97,7 +94,7 @@ public class Results extends AppCompatActivity {
                                 resultWorst();
                             }
                         }
-                    });
+                    });;
                 }
             }
             @Override
