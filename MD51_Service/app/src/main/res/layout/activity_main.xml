@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <Button
+        android:id="@+id/btnStartService"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginVertical="30dp"
+        android:text="startService()"/>
+    <Button
+        android:id="@+id/btnStopService"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginVertical="30dp"
+        android:text="stopService()"/>
+    <Button
+        android:id="@+id/btnBindService"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginVertical="30dp"
+        android:text="bindService()"/>
+    <Button
+        android:id="@+id/btnKillBindService"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginVertical="30dp"
+        android:text="kill bind service"/>
+    <Button
+        android:id="@+id/btnBindGenNumber"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginVertical="30dp"
+        android:text="Action"/>
+</LinearLayout>
