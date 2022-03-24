@@ -44,16 +44,12 @@ export default function App() {
             renderItem={RenderItem}
             sliderWidth={300}
             itemWidth={290}
-            onSnapToItem={(index) => setActiveSlide(index) }
+            onSnapToItem={(index) => setActiveSlide(index)}
             swipeThreshold={100}
-            layoutCardOffset={-12}
             inactiveSlideOpacity={0.4}
             containerCustomStyle={{
               overflow: "visible",
               marginVertical: 5,
-            }}
-            contentContainerCustomStyle={{
-              paddingTop: 0,
             }}
         />
         <Pagination
