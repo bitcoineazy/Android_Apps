@@ -7,12 +7,106 @@ import {
   SafeAreaView,
   ScrollView,
   ImageBackground,
-  useWindowDimensions, Button
+  Button, TouchableOpacity, Easing, Dimensions
 } from 'react-native';
-
 import React, {useEffect, useRef} from "react";
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+const Stack = createNativeStackNavigator();
 
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
+const scrollX = new Animated.Value(0)
+const springValue = new Animated.Value(1)
+const imageRotateValue = new Animated.Value(0)
+
+const interpolateScrollViewRotation = imageRotateValue.interpolate({
+  inputRange: [0, 100],
+  outputRange: ["0deg", "360deg"]
+})
+
+const images = ["https://picsum.photos/1000/1000?random=2", "https://picsum.photos/1000/1000?random=3", "https://picsum.photos/1000/1000?random=4",
+  "https://picsum.photos/1000/1000?random=5", "https://picsum.photos/1000/1000?random=6"]
+
+const flipAnimation = () => {
+  Animated.parallel([
+      Animated.sequence([
+        Animated.spring(springValue, {
+          toValue: 0.6,
+          friction: 1,
+          useNativeDriver: true,
+        }),
+        Animated.spring(springValue, {
+          toValue: 1,
+          friction: 1,
+          useNativeDriver: true
+        })
+      ]),
+      Animated.sequence([
+          Animated.timing(imageRotateValue, {
+            toValue: 360,
+            duration: 2000,
+            useNativeDriver: true,
+          }),
+          Animated.timing(imageRotateValue, {
+            toValue: 0,
+            duration: 2000,
+            useNativeDriver: true
+          })
+      ])
+  ]).start()
+}
+
+const transitionAnimation = (index) => {
+  return {
+    transform: [
+      { perspective: 800 },
+      {
+        scale: scrollX.interpolate({
+          inputRange: [
+            (index - 1) * windowWidth,
+            index * windowWidth,
+            (index + 1) * windowWidth
+          ],
+          outputRange: [0.25, 1, 0.25]
+        })
+      },
+      {
+        rotateX: scrollX.interpolate({
+          inputRange: [
+            (index - 1) * windowWidth,
+            index * windowWidth,
+            (index + 1) * windowWidth
+          ],
+          outputRange: ["45deg", "0deg", "45deg"]
+        })
+      },
+      {
+        rotateY: scrollX.interpolate({
+          inputRange: [
+            (index - 1) * windowWidth,
+            index * windowWidth,
+            (index + 1) * windowWidth
+          ],
+          outputRange: ["-45deg", "0deg", "45deg"]
+        })
+      }
+    ]
+  };
+};
+
+const AnimatedImageCardView = (props) => {
+  return (
+      <Animated.View style={[styles.scrollPage,
+        {transform: [{scale: springValue}, {rotate: interpolateScrollViewRotation}]}]}>
+        <Animated.View style={[styles.screen, transitionAnimation(props.index)]}>
+          {props.children}
+        </Animated.View>
+      </Animated.View>
+  );
+};
 
 const FadeInView = (props) => {
   const fadeAnim = useRef(new Animated.Value(0)).current  // Initial value for opacity: 0
@@ -21,21 +115,10 @@ const FadeInView = (props) => {
     Animated.timing(
         fadeAnim,{
           toValue: 1,
-          duration: 2000,
+          duration: 3000,
           useNativeDriver: true,
         }
     ).start()
-    // start( event => {
-    //   if (event.finished) {
-    //     Animated.timing(
-    //         fadeAnim,{
-    //           toValue: 0,
-    //           duration: 2000,
-    //           useNativeDriver: true,
-    //         }
-    //     ).start()
-    //   }
-    // })
   }, [fadeAnim])
 
   return (
@@ -45,98 +128,155 @@ const FadeInView = (props) => {
             opacity: fadeAnim,         // Bind opacity to animated value
           }}
       >
+        <TouchableOpacity style={{
+          backgroundColor: "steelblue",
+          height: 50,
+          width: windowWidth - 30,
+          borderRadius: 15,
+          alignItems: "center"}}>
+          <Text style={styles.button_text}>
+            Галерея
+          </Text>
+        </TouchableOpacity>
         {props.children}
       </Animated.View>
   );
 }
 
-const images = new Array(6).fill('https://images.unsplash.com/photo-1556740749-887f6717d7e4');
-
-export default function App() {
-  const scrollX = useRef(new Animated.Value(0)).current;
-  const fadeAnimInOut = useRef(new Animated.Value(1)).current;
-
-  const fadeInOut = () => {
-      Animated.timing(fadeAnimInOut, {
-        toValue: 0.1,
-        duration: 3000,
-        useNativeDriver: true,
-      }).start( () => {
-        Animated.timing(fadeAnimInOut, {
-          toValue: 1,
-          duration: 3000,
-          useNativeDriver: true,
-        }).start()
-      })
-  }
-
-  const { width: windowWidth } = useWindowDimensions();
+const ScrollViewScreen = () => {
   return (
       <SafeAreaView style={styles.container}>
-          <FadeInView style={styles.scrollContainer}>
-            <ScrollView
-                horizontal={true}
-                style={styles.scrollViewStyle}
-                pagingEnabled
-                showsHorizontalScrollIndicator={false}
-                onScroll={Animated.event([
-                  {
-                    nativeEvent: {
-                      contentOffset: {
-                        x: scrollX,
-                      },
+        <TouchableOpacity style={styles.button}>
+
+        </TouchableOpacity>
+        <FadeInView style={styles.scrollContainer}>
+
+          <ScrollView
+              horizontal={true}
+              style={styles.scrollViewStyle}
+              pagingEnabled
+              showsHorizontalScrollIndicator={false}
+              onScroll={Animated.event([
+                {
+                  nativeEvent: {
+                    contentOffset: {
+                      x: scrollX,
                     },
                   },
-                ], {listener: event => fadeInOut(), useNativeDriver: false})}
-                scrollEventThrottle={1}
+                },
+              ], {useNativeDriver: false})}
+              scrollEventThrottle={1}
 
-            >
-              {images.map((image, imageIndex) => {
-                return (
-                  <Animated.View
-                      /* elevation to affect z-order of overlapping views in order for animation to work */
-                      style={{ width: windowWidth, height: 250, opacity: fadeAnimInOut, elevation: 1}}
+          >
+            {images.map((image, imageIndex) => {
+              return (
+                  <AnimatedImageCardView
                       key={imageIndex}
+                      index={imageIndex}
                   >
                     <ImageBackground source={{ uri: image }} style={styles.card}>
                       <View style={styles.textContainer}>
-                          <Text style={styles.infoText}>
-                            {"Image - " + imageIndex}
-                          </Text>
+                        <Text style={styles.infoText}>
+                          {"Image - " + imageIndex}
+                        </Text>
                       </View>
                     </ImageBackground>
-                  </Animated.View>
-                );
-              })}
-            </ScrollView>
-            <View style={styles.indicatorContainer}>
-              {images.map((image, imageIndex) => {
-                const width = scrollX.interpolate({
-                  inputRange: [
-                    windowWidth * (imageIndex - 1),
-                    windowWidth * imageIndex,
-                    windowWidth * (imageIndex + 1)
-                  ],
-                  outputRange: [8, 16, 8],
-                  extrapolate: "clamp"
-                });
-                return (
-                    <Animated.View
-                        key={imageIndex}
-                        style={[styles.normalDot, { width }]}
-                    />
-                );
-              })}
-            </View>
-
-          </FadeInView>
-        <View style={{ marginTop: 30 }}>
-          <Button title="Flip" onPress={fadeInOut}/>
+                  </AnimatedImageCardView>
+              );
+            })}
+          </ScrollView>
+          <View style={styles.indicatorContainer}>
+            {images.map((image, imageIndex) => {
+              const width = scrollX.interpolate({
+                inputRange: [
+                  windowWidth * (imageIndex - 1),
+                  windowWidth * imageIndex,
+                  windowWidth * (imageIndex + 1)
+                ],
+                outputRange: [8, 16, 8],
+                extrapolate: "clamp"
+              });
+              return (
+                  <Animated.View
+                      key={imageIndex}
+                      style={[styles.normalDot, { width }]}
+                  />
+              );
+            })}
+          </View>
+        </FadeInView>
+        <View style={{ margin: 30}}>
+          <Button title="Flip" onPress={flipAnimation}/>
         </View>
       </SafeAreaView>
   );
 }
 
+const LaunchScreen = ({ navigation }) => {
+  const rotateValue = useRef(new Animated.Value(0)).current
+  const xValue = useRef(new Animated.Value(0)).current
+
+  const interpolateRotation = rotateValue.interpolate({
+    inputRange: [0, 100],
+    outputRange: ["0deg", "360deg"]
+  })
+
+  const moveAndRotateAnimation = () => {
+    Animated.parallel([
+      Animated.sequence([
+        Animated.timing(rotateValue, {
+          toValue: 100,
+          duration: 2000,
+          easing: Easing.linear,
+          useNativeDriver: true,
+        }),
+        Animated.timing(rotateValue, {
+          toValue: 0,
+          duration: 0,
+          useNativeDriver: true,
+          easing: Easing.linear,
+        }),
+      ]),
+      Animated.timing(xValue, {
+        toValue: windowWidth - 300,
+        duration: 500,
+        useNativeDriver: true,
+        easing: Easing.linear
+      }),
+    ]).start(() => {
+      moveAndRotateAnimation()
+    })
+  }
+
+  return (
+      <View style={styles.container}>
+        <Animated.View style={{ margin: 30}}>
+          <Animated.Image
+              style={{ width: 200, height: 200, alignSelf: "center", margin: 50,
+                transform: [{rotate: interpolateRotation}, {translateX: xValue}]}}
+              source={require("./assets/atomic.png")}
+              onLoad={() => moveAndRotateAnimation()}
+          />
+          <TouchableOpacity style={styles.button} onPress={() => navigation.push("Images")}>
+            <Text style={styles.button_text}>
+              Перейти к изображениям
+            </Text>
+          </TouchableOpacity>
+        </Animated.View>
+      </View>
+  )
+}
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Welcome!" component={LaunchScreen} />
+        <Stack.Screen name="Images" component={ScrollViewScreen} options={{ headerShown: false }}/>
+      </Stack.Navigator>
+    </NavigationContainer>
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -149,22 +289,40 @@ const styles = StyleSheet.create({
     backgroundColor: "powderblue"
   },
   scrollContainer: {
-    height: 300,
+    flex: 1,
     alignItems: "center",
     justifyContent: "center"
   },
   scrollViewStyle: {
-    backgroundColor:'white'
+    flex: 1,
+    backgroundColor:'white',
+  },
+  screen: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  button: {
+    backgroundColor: "teal",
+    height: 50,
+    marginTop: 80,
+    borderRadius: 15,
+    alignItems: "center",
+  },
+  button_text: {
+    color: "white",
+    padding: 12,
+    paddingHorizontal: 20,
+    fontWeight: "bold",
+    fontSize: 18,
   },
   card: {
-    flex: 1,
-    marginVertical: 4,
-    marginHorizontal: 16,
+    width: windowWidth - 20,
+    height: windowHeight / 2,
     borderRadius: 10,
     overflow: "hidden",
     alignItems: "center",
     justifyContent: "center",
-
   },
   textContainer: {
     backgroundColor: "rgba(0,0,0, 0.7)",
@@ -184,12 +342,15 @@ const styles = StyleSheet.create({
     backgroundColor: "silver",
     marginHorizontal: 4
   },
+  scrollPage: {
+    width: windowWidth,
+    padding: 20,
+  },
   indicatorContainer: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 30,
-    marginTop: 20,
   },
   outerScroll: {
     flex: 1,
