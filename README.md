@@ -1,2 +1,2 @@
 # Android_Apps
-Java-based Android apps repository for finished projects
+Java & React Native Android apps repository for finished projects
