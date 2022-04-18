@@ -1,0 +1,26 @@
+{
+  "name": "SSH_App",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "react": "16.14.0",
+    "react-native": "0.54.0",
+    "react-native-dialog": "^5.6.0",
+    "react-native-material-textfield": "^0.12.0",
+    "react-native-radio-buttons": "^1.0.0",
+    "react-native-ssh-sftp": "^1.0.3"
+  },
+  "devDependencies": {
+    "babel-jest": "27.5.1",
+    "babel-preset-react-native": "4.0.1",
+    "jest": "27.5.1",
+    "react-test-renderer": "16.14.0"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
