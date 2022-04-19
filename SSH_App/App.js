@@ -42,8 +42,8 @@ export default class App extends Component {
     this.state = {
       host: "192.168.1.2",
       port: "22",
-      username: "---",
-      password: "---",
+      username: "noble6",
+      password: "123",
       privateKey:
         "\
       -----BEGIN RSA PRIVATE KEY-----\n\
@@ -55,13 +55,19 @@ export default class App extends Component {
       shellOutput: "",
       sftpOutput: [],
       currentPath: "",
+      fileMenuDialogVisible: false,
+      directoryMenuDialogVisible: false,
       renameDialogVisible: false,
-      pathToRename: "",
+      createDirectoryDialogVisible: false,
+      deleteDialogVisible: false,
+      manageCurrentDirectory: false,
+      pathLongPress: "",
+      newDirectoryPath: "",
       newRenamedPath: "",
     };
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
     await requestStoragePermission();
   }
 
@@ -153,7 +159,6 @@ export default class App extends Component {
                 });
               } else {
                 console.warn(error);
-                this.setState({ shellOutput: error });
               }
             }
           );
@@ -171,13 +176,6 @@ export default class App extends Component {
     this.textInput.clear();
   }
 
-  enterDirectory(dir) {
-    let { currentPath } = this.state;
-    const newPath = currentPath + dir;
-    this.setState({ currentPath: newPath });
-    this.listDirectory(newPath);
-  }
-
   downloadFile(file) {
     const { sftpClient } = this.state;
     if (sftpClient) {
@@ -187,9 +185,7 @@ export default class App extends Component {
         (error, downloadedFilePath) => {
           if (error) Alert.alert(error);
           if (downloadedFilePath)
-            Alert.alert(
-              "Successfully downloaded in: " + "/storage/emulated/0/Download"
-            );
+            Alert.alert("Successfully downloaded in:", downloadedFilePath);
         }
       );
     }
@@ -202,7 +198,34 @@ export default class App extends Component {
       sftpClient.sftpRename(path, newPath, (error) => {
         if (error) console.warn(error);
         else {
-          Alert.alert("Successfully renamed");
+          Alert.alert("Successfully renamed", path + " -> \n" + newPath);
+          this.updateDirectory();
+        }
+      });
+    }
+  }
+
+  deleteFile(path) {
+    const { sftpClient } = this.state;
+    if (sftpClient) {
+      sftpClient.sftpRm(path, (error) => {
+        if (error) console.warn(error);
+        else {
+          Alert.alert("Successfully deleted:", path);
+          this.updateDirectory();
+        }
+      });
+    }
+  }
+
+  createDirectory(path) {
+    const { sftpClient } = this.state;
+    if (sftpClient) {
+      sftpClient.sftpMkdir(path, (error) => {
+        if (error) console.warn(error);
+        else {
+          Alert.alert("Successfully created directory:", path);
+          this.updateDirectory();
         }
       });
     }
@@ -219,6 +242,17 @@ export default class App extends Component {
         }
       });
     }
+  }
+
+  enterDirectory(dir) {
+    let { currentPath } = this.state;
+    const newPath = currentPath + dir;
+    this.setState({ currentPath: newPath });
+    this.listDirectory(newPath);
+  }
+
+  updateDirectory() {
+    this.listDirectory(this.state.currentPath);
   }
 
   goBack() {
@@ -254,10 +288,51 @@ export default class App extends Component {
       shellClient,
       sftpOutput,
       currentPath,
+      fileMenuDialogVisible,
       renameDialogVisible,
-      pathToRename,
+      pathLongPress,
       newRenamedPath,
     } = this.state;
+
+    const handleRenameConfirm = () => {
+      this.renameFile(
+        this.state.pathLongPress.length > 0
+          ? this.state.pathLongPress
+          : this.setState({ renameDialogVisible: false }),
+        this.state.newRenamedPath
+      );
+      this.setState({ renameDialogVisible: false });
+    };
+
+    const handleDeleteConfirm = () => {
+      this.deleteFile(
+        this.state.pathLongPress.length > 0
+          ? this.state.pathLongPress
+          : this.setState({ deleteDialogVisible: false })
+      );
+      this.setState({ deleteDialogVisible: false });
+    };
+
+    const handleCreateDirectoryConfirm = () => {
+      this.createDirectory(
+        this.state.newDirectoryPath.length > 0
+          ? this.state.newDirectoryPath
+          : this.setState({ createDirectoryDialogVisible: false })
+      );
+      this.setState({ createDirectoryDialogVisible: false });
+    };
+
+    //Манипуляции чтобы переименовать верхний уровень
+    const handleRenameInputChangeText = (newRenamedPath) => {
+      if (!this.state.manageCurrentDirectory) {
+        this.setState({
+          newRenamedPath: currentPath + newRenamedPath,
+        });
+      } else {
+        this.goBack(); // меняем currentPath один раз на уровень вверх
+        this.setState({ manageCurrentDirectory: false });
+      }
+    };
 
     const renderSFTP = () => {
       if (sftpOutput.length > 0)
@@ -268,6 +343,13 @@ export default class App extends Component {
               {f["isDirectory"] === 1 ? (
                 <TouchableOpacity
                   onPress={this.enterDirectory.bind(this, f["filename"])}
+                  onLongPress={() =>
+                    this.setState({
+                      directoryMenuDialogVisible: true,
+                      pathLongPress: currentPath + f["filename"],
+                    })
+                  }
+                  // TODO: onLongPress rmdir
                 >
                   <Text style={styles.directory}>{f["filename"]}</Text>
                 </TouchableOpacity>
@@ -279,14 +361,20 @@ export default class App extends Component {
                   )}
                   onLongPress={() =>
                     this.setState({
-                      renameDialogVisible: true,
-                      pathToRename: currentPath + f["filename"],
+                      fileMenuDialogVisible: true,
+                      pathLongPress: currentPath + f["filename"],
                     })
                   }
                 >
                   <View style={{ flexDirection: "row" }}>
-                    <Text style={{ textAlign: "left" }}>{f["filename"]}</Text>
-                    <Text style={{ textAlign: "right" }}>
+                    <Text
+                      style={{ textAlign: "left", padding: 4, fontSize: 16 }}
+                    >
+                      {f["filename"]}
+                    </Text>
+                    <Text
+                      style={{ textAlign: "right", padding: 4, fontSize: 16 }}
+                    >
                       {" "}
                       {(f["fileSize"] / 1024).toFixed(2)} Kb
                     </Text>
@@ -296,16 +384,6 @@ export default class App extends Component {
             </View>
           );
         });
-    };
-
-    const handleRenameConfirm = () => {
-      this.renameFile(
-        this.state.pathToRename.length > 0
-          ? this.state.pathToRename
-          : this.setState({ renameDialogVisible: false }),
-        this.state.newRenamedPath
-      );
-      this.setState({ renameDialogVisible: false });
     };
 
     return (
@@ -407,19 +485,135 @@ export default class App extends Component {
           </View>
         ) : selectedOption === "SFTP" ? (
           <View style={styles.outputContainer}>
-            <TouchableOpacity onPress={this.goBack.bind(this)}>
-              <Text style={{ padding: 4 }}>{currentPath}</Text>
+            <TouchableOpacity
+              onPress={this.goBack.bind(this)}
+              onLongPress={() =>
+                this.setState({
+                  directoryMenuDialogVisible: true,
+                  pathLongPress: currentPath,
+                  manageCurrentDirectory: true,
+                })
+              }
+            >
+              <Text style={{ padding: 4, color: "#007AFF", fontSize: 18 }}>
+                {currentPath}
+              </Text>
             </TouchableOpacity>
             <View>{renderSFTP()}</View>
+            <Dialog.Container visible={this.state.fileMenuDialogVisible}>
+              <Dialog.Title style={{ textAlign: "center" }}>
+                File menu
+              </Dialog.Title>
+              <Dialog.Description
+                style={{
+                  textAlign: "center",
+                  marginTop: 15,
+                  fontWeight: "bold",
+                }}
+              >
+                Choose option for file management
+              </Dialog.Description>
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: 15,
+                }}
+              >
+                <Dialog.Button
+                  style={styles.dialogButton}
+                  label="Rename"
+                  onPress={() =>
+                    this.setState({
+                      fileMenuDialogVisible: false,
+                      renameDialogVisible: true,
+                    })
+                  }
+                />
+                <Dialog.Button
+                  style={styles.dialogButton}
+                  label="Delete"
+                  onPress={() =>
+                    this.setState({
+                      fileMenuDialogVisible: false,
+                      deleteDialogVisible: true,
+                    })
+                  }
+                />
+                <Dialog.Button
+                  style={styles.dialogButton}
+                  label="Cancel"
+                  onPress={() =>
+                    this.setState({ fileMenuDialogVisible: false })
+                  }
+                />
+              </View>
+            </Dialog.Container>
+            <Dialog.Container visible={this.state.directoryMenuDialogVisible}>
+              <Dialog.Title style={{ textAlign: "center" }}>
+                Directory menu
+              </Dialog.Title>
+              <Dialog.Description
+                style={{
+                  textAlign: "center",
+                  marginTop: 15,
+                  fontWeight: "bold",
+                }}
+              >
+                Choose option for directory management
+              </Dialog.Description>
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: 15,
+                }}
+              >
+                <Dialog.Button
+                  style={styles.dialogButton}
+                  label="Create directory"
+                  onPress={() =>
+                    this.setState({
+                      directoryMenuDialogVisible: false,
+                      createDirectoryDialogVisible: true,
+                    })
+                  }
+                />
+                <Dialog.Button
+                  style={styles.dialogButton}
+                  label="Rename directory"
+                  onPress={() =>
+                    this.setState({
+                      directoryMenuDialogVisible: false,
+                      renameDialogVisible: true,
+                    })
+                  }
+                />
+                <Dialog.Button
+                  style={styles.dialogButton}
+                  label="Upload file"
+                  onPress={() => false}
+                />
+                <Dialog.Button
+                  style={styles.dialogButton}
+                  label="Cancel"
+                  onPress={() =>
+                    this.setState({ directoryMenuDialogVisible: false })
+                  }
+                />
+              </View>
+            </Dialog.Container>
             <Dialog.Container visible={this.state.renameDialogVisible}>
               <Dialog.Title>Rename file or directory</Dialog.Title>
               <Dialog.Description>Input new name</Dialog.Description>
               <Dialog.Input
                 label="New name"
-                onChangeText={(newRenamedPath) =>
-                  this.setState({
-                    newRenamedPath: currentPath + newRenamedPath,
-                  })
+                onChangeText={
+                  (newRenamedPath) =>
+                    handleRenameInputChangeText(newRenamedPath)
+                  // this.setState({
+                  //   newRenamedPath: currentPath + newRenamedPath,
+                  // })
                 }
               />
               <Dialog.Button
@@ -427,6 +621,39 @@ export default class App extends Component {
                 onPress={() => this.setState({ renameDialogVisible: false })}
               />
               <Dialog.Button label="Rename" onPress={handleRenameConfirm} />
+            </Dialog.Container>
+            <Dialog.Container visible={this.state.createDirectoryDialogVisible}>
+              <Dialog.Title>Create new directory</Dialog.Title>
+              <Dialog.Description>Input new directory name</Dialog.Description>
+              <Dialog.Input
+                label="Directory name"
+                onChangeText={(newDirectoryPath) =>
+                  this.setState({
+                    newDirectoryPath: pathLongPress + newDirectoryPath,
+                  })
+                }
+              />
+              <Dialog.Button
+                label="Cancel"
+                onPress={() =>
+                  this.setState({ createDirectoryDialogVisible: false })
+                }
+              />
+              <Dialog.Button
+                label="Create"
+                onPress={handleCreateDirectoryConfirm}
+              />
+            </Dialog.Container>
+            <Dialog.Container visible={this.state.deleteDialogVisible}>
+              <Dialog.Title>Delete file</Dialog.Title>
+              <Dialog.Description>
+                Are you sure you want to delete this file?
+              </Dialog.Description>
+              <Dialog.Button
+                label="Cancel"
+                onPress={() => this.setState({ deleteDialogVisible: false })}
+              />
+              <Dialog.Button label="Delete" onPress={handleDeleteConfirm} />
             </Dialog.Container>
           </View>
         ) : undefined}
@@ -455,6 +682,9 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
     justifyContent: "center",
   },
+  dialogButton: {
+    fontWeight: "bold",
+  },
   outputContainer: {
     flex: 1,
     marginTop: 15,
@@ -472,5 +702,6 @@ const styles = StyleSheet.create({
   directory: {
     padding: 4,
     color: "black",
+    fontSize: 16,
   },
 });
