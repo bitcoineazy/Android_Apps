@@ -42,8 +42,8 @@ export default class App extends Component {
     this.state = {
       host: "192.168.1.2",
       port: "22",
-      username: "noble6",
-      password: "123",
+      username: "---",
+      password: "---",
       privateKey:
         "\
       -----BEGIN RSA PRIVATE KEY-----\n\
@@ -60,6 +60,7 @@ export default class App extends Component {
       renameDialogVisible: false,
       createDirectoryDialogVisible: false,
       deleteDialogVisible: false,
+      deleteDirectoryDialogVisible: false,
       manageCurrentDirectory: false,
       pathLongPress: "",
       newDirectoryPath: "",
@@ -125,7 +126,7 @@ export default class App extends Component {
             (error) => {
               if (!error) {
                 this.setState({ shellClient });
-                shellClient.startShell("vanilla", (error) => {
+                shellClient.startShell("vt100", (error) => {
                   if (error) this.setState({ shellOutput: error });
                 });
                 shellClient.on("Shell", (event) => {
@@ -188,6 +189,9 @@ export default class App extends Component {
             Alert.alert("Successfully downloaded in:", downloadedFilePath);
         }
       );
+      sftpClient.on("DownloadProgress", (event) => {
+        console.warn(event);
+      });
     }
   }
 
@@ -211,7 +215,7 @@ export default class App extends Component {
       sftpClient.sftpRm(path, (error) => {
         if (error) console.warn(error);
         else {
-          Alert.alert("Successfully deleted:", path);
+          Alert.alert("Successfully deleted file:", path);
           this.updateDirectory();
         }
       });
@@ -225,6 +229,19 @@ export default class App extends Component {
         if (error) console.warn(error);
         else {
           Alert.alert("Successfully created directory:", path);
+          this.updateDirectory();
+        }
+      });
+    }
+  }
+
+  deleteDirectory(path) {
+    const { sftpClient } = this.state;
+    if (sftpClient) {
+      sftpClient.sftpRmdir(path, (error) => {
+        if (error) console.warn(error);
+        else {
+          Alert.alert("Successfully deleted directory:", path);
           this.updateDirectory();
         }
       });
@@ -322,6 +339,22 @@ export default class App extends Component {
       this.setState({ createDirectoryDialogVisible: false });
     };
 
+    const handleDeleteDirectoryConfirm = async () => {
+      console.log(this.state.pathLongPress);
+      // Если находимся в той же директории, которую удаляем, то перемещаемся на уровень выше
+      if (this.state.manageCurrentDirectory) {
+        this.setState({ manageCurrentDirectory: false });
+        // Ждём пока переместимся выше
+        await this.goBack();
+      }
+      this.deleteDirectory(
+        this.state.pathLongPress.length > 0
+          ? this.state.pathLongPress
+          : this.setState({ deleteDirectoryDialogVisible: false })
+      );
+      this.setState({ deleteDirectoryDialogVisible: false });
+    };
+
     //Манипуляции чтобы переименовать верхний уровень
     const handleRenameInputChangeText = (newRenamedPath) => {
       if (!this.state.manageCurrentDirectory) {
@@ -349,7 +382,6 @@ export default class App extends Component {
                       pathLongPress: currentPath + f["filename"],
                     })
                   }
-                  // TODO: onLongPress rmdir
                 >
                   <Text style={styles.directory}>{f["filename"]}</Text>
                 </TouchableOpacity>
@@ -444,6 +476,7 @@ export default class App extends Component {
           onSelection={(selectedOption) => this.setState({ selectedOption })}
           selectedOption={selectedOption}
         />
+        <Text>Hello im a progress bar</Text>
         {selectedOption === "Execute" ? (
           <TextField
             labelHeight={20}
@@ -465,11 +498,13 @@ export default class App extends Component {
         </TouchableOpacity>
         {selectedOption === "Execute" ? (
           <View style={styles.outputContainer}>
-            <Text>{exeOutput}</Text>
+            <Text selectable>{exeOutput}</Text>
           </View>
         ) : selectedOption === "Shell" ? (
           <View style={styles.outputContainer}>
-            <Text style={{ fontSize: 12 }}>{shellOutput}</Text>
+            <Text selectable style={{ fontSize: 12 }}>
+              {shellOutput}
+            </Text>
             {shellClient ? (
               <TextInput
                 underlineColorAndroid="transparent"
@@ -591,6 +626,16 @@ export default class App extends Component {
                 />
                 <Dialog.Button
                   style={styles.dialogButton}
+                  label="Delete directory"
+                  onPress={() =>
+                    this.setState({
+                      directoryMenuDialogVisible: false,
+                      deleteDirectoryDialogVisible: true,
+                    })
+                  }
+                />
+                <Dialog.Button
+                  style={styles.dialogButton}
                   label="Upload file"
                   onPress={() => false}
                 />
@@ -654,6 +699,22 @@ export default class App extends Component {
                 onPress={() => this.setState({ deleteDialogVisible: false })}
               />
               <Dialog.Button label="Delete" onPress={handleDeleteConfirm} />
+            </Dialog.Container>
+            <Dialog.Container visible={this.state.deleteDirectoryDialogVisible}>
+              <Dialog.Title>Delete directory</Dialog.Title>
+              <Dialog.Description>
+                Are you sure you want to delete this directory?
+              </Dialog.Description>
+              <Dialog.Button
+                label="Cancel"
+                onPress={() =>
+                  this.setState({ deleteDirectoryDialogVisible: false })
+                }
+              />
+              <Dialog.Button
+                label="Delete"
+                onPress={handleDeleteDirectoryConfirm}
+              />
             </Dialog.Container>
           </View>
         ) : undefined}
