@@ -5,7 +5,9 @@ import android.app.Application;
 
 
 import com.facebook.react.ReactApplication;
+import com.RNFetchBlob.RNFetchBlobPackage;
 import com.reactlibrary.RNSshClientPackage;
+import com.reactnativedocumentpicker.ReactNativeDocumentPicker;
 
 
 import com.facebook.react.ReactNativeHost;
@@ -28,7 +30,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-          new RNSshClientPackage()
+            new RNFetchBlobPackage(),
+          new RNSshClientPackage(),
+          new ReactNativeDocumentPicker()
       );
     }
 
