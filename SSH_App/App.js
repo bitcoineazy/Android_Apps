@@ -168,7 +168,6 @@ export default class App extends Component {
                 });
               } else {
                 console.warn(error);
-                this.setState({sftpOutput: [error.toArray()]})
               }
             }
           );
