@@ -2,8 +2,8 @@
   {
     "path": "/bitcoineazy/Android_Apps",
     "title": "GitHub - bitcoineazy/Android_Apps: Java & React Native Android apps repository",
-    "count": 84,
-    "uniques": 10
+    "count": 86,
+    "uniques": 9
   },
   {
     "path": "/bitcoineazy/Android_Apps/tree/main/CD28_FormDT",
@@ -12,34 +12,34 @@
     "uniques": 2
   },
   {
-    "path": "/bitcoineazy/Android_Apps/tree/main/CD24_Navigation",
-    "title": "Android_Apps/CD24_Navigation at main · bitcoineazy/Android_Apps",
-    "count": 19,
-    "uniques": 3
-  },
-  {
     "path": "/bitcoineazy/Android_Apps/tree/main/SSH_App",
     "title": "Android_Apps/SSH_App at main · bitcoineazy/Android_Apps",
-    "count": 18,
+    "count": 20,
     "uniques": 2
   },
   {
-    "path": "/bitcoineazy/Android_Apps/blob/main/CD24_Navigation/App.js",
-    "title": "Android_Apps/App.js at main · bitcoineazy/Android_Apps",
-    "count": 14,
-    "uniques": 3
-  },
-  {
-    "path": "/bitcoineazy/Android_Apps/tree/main/CD26_Form",
-    "title": "Android_Apps/CD26_Form at main · bitcoineazy/Android_Apps",
-    "count": 12,
-    "uniques": 3
+    "path": "/bitcoineazy/Android_Apps/tree/main/CD24_Navigation",
+    "title": "Android_Apps/CD24_Navigation at main · bitcoineazy/Android_Apps",
+    "count": 16,
+    "uniques": 2
   },
   {
     "path": "/bitcoineazy/Android_Apps/graphs/traffic",
     "title": "Traffic · bitcoineazy/Android_Apps",
-    "count": 12,
+    "count": 15,
     "uniques": 1
+  },
+  {
+    "path": "/bitcoineazy/Android_Apps/tree/main/CD26_Form",
+    "title": "Android_Apps/CD26_Form at main · bitcoineazy/Android_Apps",
+    "count": 13,
+    "uniques": 3
+  },
+  {
+    "path": "/bitcoineazy/Android_Apps/blob/main/CD24_Navigation/App.js",
+    "title": "Android_Apps/App.js at main · bitcoineazy/Android_Apps",
+    "count": 12,
+    "uniques": 3
   },
   {
     "path": "/bitcoineazy/Android_Apps/tree/main/CD25_Animation",
@@ -50,13 +50,13 @@
   {
     "path": "/bitcoineazy/Android_Apps/pulse",
     "title": "Pulse · bitcoineazy/Android_Apps",
-    "count": 9,
+    "count": 11,
     "uniques": 1
   },
   {
-    "path": "/bitcoineazy/Android_Apps/blob/main/CD28_FormDT/screens/Login.js",
-    "title": "Android_Apps/Login.js at main · bitcoineazy/Android_Apps",
-    "count": 8,
+    "path": "/bitcoineazy/Android_Apps/blob/main/SSH_App/App.js",
+    "title": "Android_Apps/App.js at main · bitcoineazy/Android_Apps",
+    "count": 9,
     "uniques": 2
   }
 ]
