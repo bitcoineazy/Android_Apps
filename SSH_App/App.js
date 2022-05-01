@@ -160,7 +160,7 @@ export default class App extends Component {
                 this.setState({ sftpClient });
                 sftpClient.connectSFTP((error) => {
                   if (error) {
-                    console.warn(error);
+                    Alert.alert("Error", error);
                   } else {
                     this.listDirectory(".");
                     this.setState({ currentPath: "./" });
@@ -226,7 +226,6 @@ export default class App extends Component {
   }
 
   renameFile(path, newPath) {
-    console.log(path, newPath);
     const { sftpClient } = this.state;
     if (sftpClient) {
       sftpClient.sftpRename(path, newPath, (error) => {
@@ -285,6 +284,7 @@ export default class App extends Component {
         if (error) {
           console.warn(error);
         } else {
+          console.log(response);
           this.setState({ sftpOutput: response });
         }
       });
@@ -304,12 +304,16 @@ export default class App extends Component {
 
   goBack() {
     let { currentPath } = this.state;
-    const newPath = currentPath.substring(
-      0,
-      currentPath.slice(0, -1).lastIndexOf("/") + 1
-    );
-    this.setState({ currentPath: newPath });
-    this.listDirectory(newPath);
+    if (currentPath !== "./") {
+      const newPath = currentPath.substring(
+        0,
+        currentPath.slice(0, -1).lastIndexOf("/") + 1
+      );
+      this.setState({ currentPath: newPath });
+      this.listDirectory(newPath);
+    } else {
+      Alert.alert("Error", "You can't move outside your directory");
+    }
   }
 
   componentWillUnmount() {
@@ -347,13 +351,14 @@ export default class App extends Component {
       this.setState({ renameDialogVisible: false });
     };
 
-    //Манипуляции чтобы переименовать верхний уровень
+    // Операции чтобы переименовать верхний уровень
     const handleRenameInputChangeText = (newRenamedPath) => {
       if (!this.state.manageCurrentDirectory) {
         this.setState({
           newRenamedPath: currentPath + newRenamedPath,
         });
       } else {
+        // Если находимся в директории, которую будем переименовывать
         this.goBack(); // меняем currentPath один раз на уровень вверх
         this.setState({ manageCurrentDirectory: false });
       }
@@ -378,7 +383,6 @@ export default class App extends Component {
     };
 
     const handleDeleteDirectoryConfirm = async () => {
-      console.log(this.state.pathLongPress);
       // Если находимся в той же директории, которую удаляем, то перемещаемся на уровень выше
       if (this.state.manageCurrentDirectory) {
         this.setState({ manageCurrentDirectory: false });
@@ -435,6 +439,7 @@ export default class App extends Component {
                     this.setState({
                       directoryMenuDialogVisible: true,
                       pathLongPress: currentPath + f["filename"],
+                      manageCurrentDirectory: false,
                     })
                   }
                 >
@@ -450,20 +455,13 @@ export default class App extends Component {
                     this.setState({
                       fileMenuDialogVisible: true,
                       pathLongPress: currentPath + f["filename"],
+                      manageCurrentDirectory: false,
                     })
                   }
                 >
-                  <View style={{ flexDirection: "row" }}>
-                    <Text
-                      style={{ textAlign: "left", padding: 4, fontSize: 16 }}
-                    >
-                      {f["filename"]}
-                    </Text>
-                    <Text
-                      style={{ textAlign: "right", padding: 4, fontSize: 16 }}
-                    >
-                      {" "}
-                      {(f["fileSize"] / 1024).toFixed(2)} Kb
+                  <View>
+                    <Text style={{ padding: 4, fontSize: 16 }}>
+                      {f["filename"]}    {(f["fileSize"] / 1024).toFixed(2)} Kb
                     </Text>
                   </View>
                 </TouchableOpacity>
