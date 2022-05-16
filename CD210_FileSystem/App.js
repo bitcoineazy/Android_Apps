@@ -11,17 +11,23 @@ import {
   Alert,
   Image,
 } from "react-native";
+import {API_KEY} from "dotenv";
 
-const GIPHY_API_KEY = "***************************";
+const GIPHY_API_KEY = API_KEY;
 
 const gifDir = FileSystem.cacheDirectory + "giphy/";
 const gifFileUri = (gifId) => gifDir + `gif_${gifId}_200.gif`;
 const gifUrl = (gifId) => `https://media1.giphy.com/media/${gifId}/200.gif`;
 
 const redditImageDir = FileSystem.cacheDirectory + "reddit/";
-const redditGifUrl = [
-  "https://i.redd.it/ma7iz0jz8nz81.jpg",
-  "https://i.redd.it/0j9wrlt3cnz81.jpg",
+const redditFileUri = (imageId) => redditImageDir + `image_${imageId}.jpg`
+const redditImageUrl = (imageId) => `https://i.redd.it/${imageId}.jpg`
+const redditImageIds = [
+    "ma7iz0jz8nz81",
+    "0j9wrlt3cnz81",
+    "4tafxwqt2tz81",
+    "127k07fq5vz81",
+    "tpddyiuepvz81",
 ];
 
 export default class App extends React.Component {
@@ -32,15 +38,24 @@ export default class App extends React.Component {
       giphyGifsIds: [],
       giphyGifsTitles: [],
       giphyGifsUri: [],
-      redditGifs: [],
+      redditImagesUri: [],
     };
+  }
+  async deleteAllFiles() {
+    console.log("Deleting all GIFs and images");
+    await FileSystem.deleteAsync(gifDir);
+    await FileSystem.deleteAsync(redditImageDir);
   }
 
   async componentWillUnmount() {
     const dirInfo = await FileSystem.getInfoAsync(gifDir);
     if (dirInfo.exists) {
-      await this.deleteAllGifs();
+      await this.deleteAllFiles();
     }
+  }
+
+  async componentDidMount() {
+    await this.addRedditImages()
   }
 
   async ensureDirExists(dir) {
@@ -77,10 +92,17 @@ export default class App extends React.Component {
     return fileUri;
   }
 
-  async deleteAllGifs() {
-    console.log("Deleting all GIFs and images");
-    await FileSystem.deleteAsync(gifDir);
-    await FileSystem.deleteAsync(redditImageDir);
+  async getSingleImage(imageId) {
+    await this.ensureDirExists(gifDir);
+
+    const fileUri = redditFileUri(imageId);
+    const fileInfo = await FileSystem.getInfoAsync(fileUri);
+
+    if (!fileInfo.exists) {
+      console.log("Gif isn't cached locally. Downloading...");
+      await FileSystem.downloadAsync(redditImageUrl(imageId), fileUri);
+    }
+    return fileUri;
   }
 
   async findGifs(query) {
@@ -95,13 +117,15 @@ export default class App extends React.Component {
           `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=${query}&limit=5&offset=0&rating=g&lang=en`
         );
         const { data } = await response.json();
+
         this.setState({
           giphyGifsIds: data.map((item) => item.id),
           giphyGifsTitles: data.map((item) => item.title),
         });
+
         await this.addMultipleGifs(this.state.giphyGifsIds);
+
         for (let i = 0; i < this.state.giphyGifsIds.length; i++) {
-          console.log(i);
           this.setState({
             giphyGifsUri: [
               ...this.state.giphyGifsUri,
@@ -111,7 +135,6 @@ export default class App extends React.Component {
         }
       } catch (e) {
         console.error("Unable to search for gifs", e);
-        return [];
       }
     } else {
       Alert.alert("Please input search request query");
@@ -119,17 +142,31 @@ export default class App extends React.Component {
   }
 
   async addRedditImages() {
-    await this.ensureDirExists(redditImageDir)
+    try {
+      await this.ensureDirExists(redditImageDir);
+      console.log("Downloading", redditImageIds.length, "image files...");
 
+      await Promise.all(
+          redditImageIds.map((id) => FileSystem.downloadAsync(redditImageUrl(id), redditFileUri(id)))
+      );
 
+      for (let i = 0; i < redditImageIds.length; i++) {
+        this.setState({
+          redditImagesUri: [
+            ...this.state.redditImagesUri,
+            await this.getSingleImage(redditImageIds[i]),
+          ],
+        });
+      }
+    } catch (e) {
+      console.error("Couldn't download image files:", e);
+    }
   }
 
   render() {
     const renderGiphyItems = () => {
       if (this.state.giphyGifsIds.length > 0) {
         return this.state.giphyGifsIds.map((gif, id) => {
-          console.log("render titles: " + this.state.giphyGifsTitles[id]);
-          console.log("render uris: " + this.state.giphyGifsUri[id]);
           return (
             <View key={id} style={styles.giphy_item}>
               <Text style={{ fontSize: 18, margin: 10 }}>
@@ -145,7 +182,23 @@ export default class App extends React.Component {
       }
     };
 
-    const renderRedditItems = () => {};
+    const renderRedditItems = () => {
+      if (this.state.redditImagesUri.length > 0) {
+        return redditImageIds.map((item, id) => {
+          return (
+              <View key={id} style={styles.giphy_item}>
+                <Text style={{fontSize: 18, margin: 10}}>
+                  Image #{id + 1}
+                </Text>
+                <Image
+                    style={{height: 250, width: 250, margin: 10}}
+                    source={{uri: this.state.redditImagesUri[id]}}
+                />
+              </View>
+          )
+        })
+      }
+    }
 
     return (
       <View style={styles.container}>
@@ -165,7 +218,9 @@ export default class App extends React.Component {
           </ScrollView>
           <ScrollView
             style={{ width: Dimensions.get("window").width }}
-          ></ScrollView>
+          >
+            {renderRedditItems()}
+          </ScrollView>
         </ScrollView>
       </View>
     );
