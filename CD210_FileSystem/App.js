@@ -11,7 +11,7 @@ import {
   Alert,
   Image,
 } from "react-native";
-import {API_KEY} from "dotenv";
+import { API_KEY } from "dotenv";
 
 const GIPHY_API_KEY = API_KEY;
 
@@ -20,14 +20,14 @@ const gifFileUri = (gifId) => gifDir + `gif_${gifId}_200.gif`;
 const gifUrl = (gifId) => `https://media1.giphy.com/media/${gifId}/200.gif`;
 
 const redditImageDir = FileSystem.cacheDirectory + "reddit/";
-const redditFileUri = (imageId) => redditImageDir + `image_${imageId}.jpg`
-const redditImageUrl = (imageId) => `https://i.redd.it/${imageId}.jpg`
+const redditFileUri = (imageId) => redditImageDir + `image_${imageId}.jpg`;
+const redditImageUrl = (imageId) => `https://i.redd.it/${imageId}.jpg`;
 const redditImageIds = [
-    "ma7iz0jz8nz81",
-    "0j9wrlt3cnz81",
-    "4tafxwqt2tz81",
-    "127k07fq5vz81",
-    "tpddyiuepvz81",
+  "ma7iz0jz8nz81",
+  "0j9wrlt3cnz81",
+  "4tafxwqt2tz81",
+  "127k07fq5vz81",
+  "tpddyiuepvz81",
 ];
 
 export default class App extends React.Component {
@@ -55,7 +55,7 @@ export default class App extends React.Component {
   }
 
   async componentDidMount() {
-    await this.addRedditImages()
+    await this.addRedditImages();
   }
 
   async ensureDirExists(dir) {
@@ -147,7 +147,9 @@ export default class App extends React.Component {
       console.log("Downloading", redditImageIds.length, "image files...");
 
       await Promise.all(
-          redditImageIds.map((id) => FileSystem.downloadAsync(redditImageUrl(id), redditFileUri(id)))
+        redditImageIds.map((id) =>
+          FileSystem.downloadAsync(redditImageUrl(id), redditFileUri(id))
+        )
       );
 
       for (let i = 0; i < redditImageIds.length; i++) {
@@ -186,19 +188,17 @@ export default class App extends React.Component {
       if (this.state.redditImagesUri.length > 0) {
         return redditImageIds.map((item, id) => {
           return (
-              <View key={id} style={styles.giphy_item}>
-                <Text style={{fontSize: 18, margin: 10}}>
-                  Image #{id + 1}
-                </Text>
-                <Image
-                    style={{height: 250, width: 250, margin: 10}}
-                    source={{uri: this.state.redditImagesUri[id]}}
-                />
-              </View>
-          )
-        })
+            <View key={id} style={styles.giphy_item}>
+              <Text style={{ fontSize: 18, margin: 10 }}>Image #{id + 1}</Text>
+              <Image
+                style={{ height: 250, width: 250, margin: 10 }}
+                source={{ uri: this.state.redditImagesUri[id] }}
+              />
+            </View>
+          );
+        });
       }
-    }
+    };
 
     return (
       <View style={styles.container}>
@@ -216,9 +216,7 @@ export default class App extends React.Component {
             />
             {renderGiphyItems()}
           </ScrollView>
-          <ScrollView
-            style={{ width: Dimensions.get("window").width }}
-          >
+          <ScrollView style={{ width: Dimensions.get("window").width }}>
             {renderRedditItems()}
           </ScrollView>
         </ScrollView>
