@@ -2,14 +2,8 @@
   {
     "path": "/bitcoineazy/Android_Apps",
     "title": "GitHub - bitcoineazy/Android_Apps: Java & React Native Android apps repositor...",
-    "count": 64,
-    "uniques": 12
-  },
-  {
-    "path": "/bitcoineazy/Android_Apps/tree/main/CD26_Form",
-    "title": "Android_Apps/CD26_Form at main · bitcoineazy/Android_Apps",
-    "count": 22,
-    "uniques": 2
+    "count": 57,
+    "uniques": 11
   },
   {
     "path": "/bitcoineazy/Android_Apps/tree/main/CD210_FileSystem",
@@ -22,12 +16,6 @@
     "title": "Android_Apps/CD29_AndroidIOS at main · bitcoineazy/Android_Apps",
     "count": 16,
     "uniques": 3
-  },
-  {
-    "path": "/bitcoineazy/Android_Apps/tree/main/CD26_Form/screens",
-    "title": "Android_Apps/CD26_Form/screens at main · bitcoineazy/Android_Apps",
-    "count": 10,
-    "uniques": 2
   },
   {
     "path": "/bitcoineazy/Android_Apps/blob/main/CD210_FileSystem/App.js",
@@ -54,9 +42,21 @@
     "uniques": 3
   },
   {
+    "path": "/bitcoineazy/Android_Apps/blob/main/CD29_AndroidIOS/App.js",
+    "title": "Android_Apps/App.js at main · bitcoineazy/Android_Apps",
+    "count": 7,
+    "uniques": 2
+  },
+  {
+    "path": "/bitcoineazy/Android_Apps/tree/main/CD28_FormDT",
+    "title": "Android_Apps/CD28_FormDT at main · bitcoineazy/Android_Apps",
+    "count": 6,
+    "uniques": 3
+  },
+  {
     "path": "/bitcoineazy/Android_Apps/tree/main/CD25_Animation",
     "title": "Android_Apps/CD25_Animation at main · bitcoineazy/Android_Apps",
-    "count": 7,
-    "uniques": 3
+    "count": 6,
+    "uniques": 2
   }
 ]
