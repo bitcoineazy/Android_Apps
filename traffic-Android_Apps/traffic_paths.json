@@ -2,7 +2,7 @@
   {
     "path": "/bitcoineazy/Android_Apps",
     "title": "bitcoineazy/Android_Apps: Java & React Native Android apps repository | fa-un...",
-    "count": 54,
+    "count": 47,
     "uniques": 9
   },
   {
@@ -12,28 +12,16 @@
     "uniques": 4
   },
   {
-    "path": "/bitcoineazy/Android_Apps/tree/main/CD28_FormDT",
-    "title": "Android_Apps/CD28_FormDT at main · bitcoineazy/Android_Apps",
-    "count": 13,
-    "uniques": 3
-  },
-  {
-    "path": "/bitcoineazy/Android_Apps/pulse",
-    "title": "Pulse · bitcoineazy/Android_Apps",
-    "count": 13,
-    "uniques": 1
-  },
-  {
     "path": "/bitcoineazy/Android_Apps/tree/main/CD210_FileSystem",
     "title": "Android_Apps/CD210_FileSystem at main · bitcoineazy/Android_Apps",
     "count": 12,
     "uniques": 5
   },
   {
-    "path": "/bitcoineazy/Android_Apps/tree/main/CD211_SocialNetwork",
-    "title": "Android_Apps/CD211_SocialNetwork at main · bitcoineazy/Android_Apps",
+    "path": "/bitcoineazy/Android_Apps/tree/main/CD28_FormDT",
+    "title": "Android_Apps/CD28_FormDT at main · bitcoineazy/Android_Apps",
     "count": 12,
-    "uniques": 4
+    "uniques": 3
   },
   {
     "path": "/bitcoineazy/Android_Apps/tree/main/CD29_AndroidIOS",
@@ -42,21 +30,33 @@
     "uniques": 3
   },
   {
+    "path": "/bitcoineazy/Android_Apps/tree/main/CD211_SocialNetwork",
+    "title": "Android_Apps/CD211_SocialNetwork at main · bitcoineazy/Android_Apps",
+    "count": 11,
+    "uniques": 4
+  },
+  {
     "path": "/bitcoineazy/Android_Apps/blob/main/CD29_AndroidIOS/App.js",
     "title": "Android_Apps/App.js at main · bitcoineazy/Android_Apps",
     "count": 10,
     "uniques": 3
   },
   {
-    "path": "/bitcoineazy/Android_Apps/tree/main/CD211_SocialNetwork/src",
-    "title": "Android_Apps/CD211_SocialNetwork/src at main · bitcoineazy/Android_Apps",
-    "count": 9,
-    "uniques": 3
+    "path": "/bitcoineazy/Android_Apps/pulse",
+    "title": "Pulse · bitcoineazy/Android_Apps",
+    "count": 10,
+    "uniques": 1
   },
   {
     "path": "/bitcoineazy/Android_Apps/blob/main/CD210_FileSystem/App.js",
     "title": "Android_Apps/App.js at main · bitcoineazy/Android_Apps",
     "count": 7,
     "uniques": 5
+  },
+  {
+    "path": "/bitcoineazy/Android_Apps/tree/main/CD211_SocialNetwork/src",
+    "title": "Android_Apps/CD211_SocialNetwork/src at main · bitcoineazy/Android_Apps",
+    "count": 7,
+    "uniques": 3
   }
 ]
