@@ -2,36 +2,6 @@
   {
     "path": "/bitcoineazy/Android_Apps",
     "title": "bitcoineazy/Android_Apps: Java & React Native Android apps repository | fa-un...",
-    "count": 4,
-    "uniques": 2
-  },
-  {
-    "path": "/bitcoineazy/Android_Apps/tree/main/MD55_Broadcast/app/src/main",
-    "title": "Android_Apps/MD55_Broadcast/app/src/main at main · bitcoineazy/Android_Apps",
-    "count": 4,
-    "uniques": 1
-  },
-  {
-    "path": "/bitcoineazy/Android_Apps/tree/main/MD55_Broadcast/app/src/main/java/com/example/broadcasts",
-    "title": "Android_Apps/MD55_Broadcast/app/src/main/java/com/example/broadcasts at main ...",
-    "count": 4,
-    "uniques": 1
-  },
-  {
-    "path": "/bitcoineazy/Android_Apps/blob/main/MD55_Broadcast/app/src/main/AndroidManifest.xml",
-    "title": "Android_Apps/AndroidManifest.xml at main · bitcoineazy/Android_Apps",
-    "count": 2,
-    "uniques": 1
-  },
-  {
-    "path": "/bitcoineazy/Android_Apps/blob/main/MD55_Broadcast/app/src/main/java/com/example/broadcasts/MainActivity.java",
-    "title": "Android_Apps/MainActivity.java at main · bitcoineazy/Android_Apps",
-    "count": 2,
-    "uniques": 1
-  },
-  {
-    "path": "/bitcoineazy/Android_Apps/blob/main/MD55_Broadcast/app/src/main/java/com/example/broadcasts/MessageReceiver.java",
-    "title": "Android_Apps/MessageReceiver.java at main · bitcoineazy/Android_Apps",
     "count": 2,
     "uniques": 1
   },
@@ -48,14 +18,8 @@
     "uniques": 1
   },
   {
-    "path": "/bitcoineazy/Android_Apps/blob/main/MD54_Services/app/src/androidTest/java/com/example/services/ExampleInstrumentedTest.java",
-    "title": "Android_Apps/ExampleInstrumentedTest.java at main · bitcoineazy/Android_Apps",
-    "count": 1,
-    "uniques": 1
-  },
-  {
-    "path": "/bitcoineazy/Android_Apps/blob/main/MD54_Services/app/src/main/java/com/example/services/MyService.java",
-    "title": "Android_Apps/MyService.java at main · bitcoineazy/Android_Apps",
+    "path": "/bitcoineazy/Android_Apps/tree/main/CD25_Animation",
+    "title": "Android_Apps/CD25_Animation at main · bitcoineazy/Android_Apps",
     "count": 1,
     "uniques": 1
   }
