@@ -2,19 +2,13 @@
   {
     "path": "/bitcoineazy/Android_Apps",
     "title": "GitHub - bitcoineazy/Android_Apps: Java & React Native Android apps repositor...",
-    "count": 8,
+    "count": 7,
     "uniques": 5
   },
   {
     "path": "/bitcoineazy/Android_Apps/tree/main/CD23_Components",
     "title": "Android_Apps/CD23_Components at main · bitcoineazy/Android_Apps · GitHub",
-    "count": 6,
-    "uniques": 2
-  },
-  {
-    "path": "/bitcoineazy/Android_Apps/tree/main/CD24_Navigation",
-    "title": "Android_Apps/CD24_Navigation at main · bitcoineazy/Android_Apps · GitHub",
-    "count": 2,
+    "count": 5,
     "uniques": 2
   },
   {
@@ -36,26 +30,32 @@
     "uniques": 1
   },
   {
-    "path": "/bitcoineazy/Android_Apps/blob/main/CD23_Components/Report_CD23.pdf",
-    "title": "Android_Apps/Report_CD23.pdf at main · bitcoineazy/Android_Apps",
-    "count": 1,
-    "uniques": 1
-  },
-  {
     "path": "/bitcoineazy/Android_Apps/blob/main/CD24_Navigation/App.js",
     "title": "Android_Apps/App.js at main · bitcoineazy/Android_Apps · GitHub",
     "count": 1,
     "uniques": 1
   },
   {
-    "path": "/bitcoineazy/Android_Apps/blob/main/CD24_Navigation/Report_CD24.pdf",
-    "title": "Android_Apps/Report_CD24.pdf at main · bitcoineazy/Android_Apps",
+    "path": "/bitcoineazy/Android_Apps/find/main",
+    "title": "File Finder · GitHub",
     "count": 1,
     "uniques": 1
   },
   {
-    "path": "/bitcoineazy/Android_Apps/commit/9bbc1d3b6ed3e67d7c0fe3a42c618e5830f61c23",
-    "title": "CD212 \"Фрагменты на React Native\" отчёт · bitcoineazy/Android_Apps@9bbc1d3",
+    "path": "/bitcoineazy/Android_Apps/tree/6ca7dfbc65c0f11f4caa5a5ba6621f55a18c5653",
+    "title": "GitHub - bitcoineazy/Android_Apps at 6ca7dfbc65c0f11f4caa5a5ba6621f55a18c5653",
+    "count": 1,
+    "uniques": 1
+  },
+  {
+    "path": "/bitcoineazy/Android_Apps/tree/main/CD23_Components/assets",
+    "title": "Android_Apps/CD23_Components/assets at main · bitcoineazy/Android_Apps · GitHub",
+    "count": 1,
+    "uniques": 1
+  },
+  {
+    "path": "/bitcoineazy/Android_Apps/tree/main/CD24_Navigation",
+    "title": "Android_Apps/CD24_Navigation at main · bitcoineazy/Android_Apps · GitHub",
     "count": 1,
     "uniques": 1
   }
