@@ -2,8 +2,8 @@
   {
     "path": "/bitcoineazy/Android_Apps",
     "title": "bitcoineazy/Android_Apps: Java & React Native Android apps repository | fa-un...",
-    "count": 15,
-    "uniques": 4
+    "count": 14,
+    "uniques": 3
   },
   {
     "path": "/bitcoineazy/Android_Apps/graphs/traffic",
@@ -20,12 +20,6 @@
   {
     "path": "/bitcoineazy/Android_Apps/tree/6ca7dfbc65c0f11f4caa5a5ba6621f55a18c5653",
     "title": "bitcoineazy/Android_Apps at 6ca7dfbc65c0f11f4caa5a5ba6621f55a18c5653",
-    "count": 2,
-    "uniques": 2
-  },
-  {
-    "path": "/bitcoineazy/Android_Apps/tree/main/CD23_Components",
-    "title": "Android_Apps/CD23_Components at main · bitcoineazy/Android_Apps",
     "count": 2,
     "uniques": 2
   },
@@ -56,6 +50,12 @@
   {
     "path": "/bitcoineazy/Android_Apps/graphs/commit-activity",
     "title": "Commit Activity · bitcoineazy/Android_Apps",
+    "count": 1,
+    "uniques": 1
+  },
+  {
+    "path": "/bitcoineazy/Android_Apps/tree/main/CD23_Components",
+    "title": "Android_Apps/CD23_Components at main · bitcoineazy/Android_Apps",
     "count": 1,
     "uniques": 1
   }
