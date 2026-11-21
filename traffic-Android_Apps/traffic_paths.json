@@ -2,7 +2,13 @@
   {
     "path": "/bitcoineazy/Android_Apps/blob/main/README.md",
     "title": "/blob/main/README.md",
-    "count": 2,
-    "uniques": 2
+    "count": 4,
+    "uniques": 4
+  },
+  {
+    "path": "/bitcoineazy/Android_Apps/commits/main/README.md",
+    "title": "/commits/main/README.md",
+    "count": 1,
+    "uniques": 1
   }
 ]
